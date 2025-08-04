@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Garden Helper - Soil Health Monitoring for Everyone</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Emergency Help Button - Always Visible -->
+    <button class="emergency-help" id="emergencyHelp" aria-label="Emergency help">
+        🆘 Need Help?
+    </button>
+
+    <!-- Voice Control Button - Always Visible -->
+    <button class="voice-control" id="voiceControl" aria-label="Voice control">
+        🎤 Voice Help
+    </button>
+
+    <!-- Welcome Screen -->
+    <div class="screen" id="welcomeScreen">
+        <div class="welcome-container">
+            <div class="welcome-header">
+                <h1>🌱 Welcome to Garden Helper!</h1>
+                <p class="welcome-subtitle">Your friendly companion for healthy soil and happy plants</p>
+            </div>
+            
+            <div class="role-selection">
+                <h2>Who are you today?</h2>
+                <div class="role-buttons">
+                    <button class="role-btn" data-role="child">
+                        <div class="role-icon">👧👦</div>
+                        <div class="role-text">
+                            <h3>Young Gardener</h3>
+                            <p>Learn about soil through fun activities</p>
+                        </div>
+                    </button>
+                    <button class="role-btn" data-role="adult">
+                        <div class="role-icon">👨👩</div>
+                        <div class="role-text">
+                            <h3>Garden Helper</h3>
+                            <p>Improve your garden with expert guidance</p>
+                        </div>
+                    </button>
+                    <button class="role-btn" data-role="educator">
+                        <div class="role-icon">👨‍🏫👩‍🏫</div>
+                        <div class="role-text">
+                            <h3>Teacher/Leader</h3>
+                            <p>Guide others in learning about soil health</p>
+                        </div>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Setup Screen -->
+    <div class="screen hidden" id="setupScreen">
+        <div class="setup-container">
+            <h1>Let's Set Up Your Garden Helper</h1>
+            <p>Tell us a bit about yourself so we can make this perfect for you!</p>
+            
+            <div class="setup-form">
+                <div class="form-group">
+                    <label class="form-label">What's your name?</label>
+                    <input type="text" class="form-control large-input" id="userName" placeholder="Enter your name">
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Where are you gardening?</label>
+                    <select class="form-control large-input" id="location">
+                        <option value="">Choose your area</option>
+                        <option value="northern">Northern Region</option>
+                        <option value="southern">Southern Region</option>
+                        <option value="coastal">Coastal Area</option>
+                        <option value="mountain">Mountain Region</option>
+                    </select>
+                </div>
+                
+                <div class="accessibility-options">
+                    <h3>Make it easier to use:</h3>
+                    <div class="checkbox-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="largeText"> 
+                            <span class="checkmark"></span>
+                            Extra large text
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="highContrast"> 
+                            <span class="checkmark"></span>
+                            High contrast colors
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="voiceGuidance"> 
+                            <span class="checkmark"></span>
+                            Voice guidance
+                        </label>
+                    </div>
+                </div>
+                
+                <button class="btn btn--primary btn--lg btn--full-width" id="completeSetup">
+                    Start My Garden Journey! 🌱
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Dashboard -->
+    <div class="screen hidden" id="dashboardScreen">
+        <div class="dashboard-container">
+            <!-- Navigation -->
+            <nav class="main-nav">
+                <div class="nav-brand">
+                    <h1>🌱 Garden Helper</h1>
+                    <p class="user-greeting">Hello, <span id="userNameDisplay">Friend</span>!</p>
+                </div>
+                <div class="nav-menu">
+                    <button class="nav-btn active" data-screen="dashboard">
+                        <span class="nav-icon">🏠</span>
+                        <span class="nav-text">Home</span>
+                    </button>
+                    <button class="nav-btn" data-screen="testing">
+                        <span class="nav-icon">🔬</span>
+                        <span class="nav-text">Test Soil</span>
+                    </button>
+                    <button class="nav-btn" data-screen="progress">
+                        <span class="nav-icon">📈</span>
+                        <span class="nav-text">My Progress</span>
+                    </button>
+                    <button class="nav-btn" data-screen="learning">
+                        <span class="nav-icon">📚</span>
+                        <span class="nav-text">Learn</span>
+                    </button>
+                    <button class="nav-btn" data-screen="community">
+                        <span class="nav-icon">👥</span>
+                        <span class="nav-text">Community</span>
+                    </button>
+                </div>
+            </nav>
+
+            <!-- Dashboard Content -->
+            <main class="dashboard-main">
+                <div class="dashboard-header">
+                    <h2>Your Garden Today</h2>
+                    <p class="last-updated">Last checked: <span id="lastUpdated">2 hours ago</span></p>
+                </div>
+
+                <!-- Soil Health Status -->
+                <div class="status-grid">
+                    <div class="status-card status-good">
+                        <div class="status-icon">💧</div>
+                        <div class="status-content">
+                            <h3>Soil Moisture</h3>
+                            <div class="status-value">65%</div>
+                            <p class="status-description">Perfect for most plants</p>
+                        </div>
+                    </div>
+                    
+                    <div class="status-card status-good">
+                        <div class="status-icon">⚖️</div>
+                        <div class="status-content">
+                            <h3>Soil pH</h3>
+                            <div class="status-value">6.8</div>
+                            <p class="status-description">Slightly acidic - great for vegetables</p>
+                        </div>
+                    </div>
+                    
+                    <div class="status-card status-good">
+                        <div class="status-icon">🌡️</div>
+                        <div class="status-content">
+                            <h3>Temperature</h3>
+                            <div class="status-value">72°F</div>
+                            <p class="status-description">Ideal growing temperature</p>
+                        </div>
+                    </div>
+                    
+                    <div class="status-card status-attention">
+                        <div class="status-icon">🌿</div>
+                        <div class="status-content">
+                            <h3>Nutrients</h3>
+                            <div class="status-value">Moderate</div>
+                            <p class="status-description">Consider adding compost</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quick Actions -->
+                <div class="quick-actions">
+                    <h3>What would you like to do?</h3>
+                    <div class="action-buttons">
+                        <button class="action-btn" data-action="test">
+                            <span class="action-icon">🔬</span>
+                            <span class="action-text">Test My Soil</span>
+                        </button>
+                        <button class="action-btn" data-action="learn">
+                            <span class="action-icon">📖</span>
+                            <span class="action-text">Learn Something New</span>
+                        </button>
+                        <button class="action-btn" data-action="community">
+                            <span class="action-icon">💬</span>
+                            <span class="action-text">Ask for Help</span>
+                        </button>
+                        <button class="action-btn" data-action="progress">
+                            <span class="action-icon">🏆</span>
+                            <span class="action-text">See My Progress</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- My Plants -->
+                <div class="plants-section">
+                    <h3>My Plants Today</h3>
+                    <div class="plants-grid">
+                        <div class="plant-card status-good">
+                            <div class="plant-icon">🍅</div>
+                            <div class="plant-info">
+                                <h4>Tomatoes</h4>
+                                <p class="plant-status">Thriving! (45 days)</p>
+                            </div>
+                        </div>
+                        <div class="plant-card status-good">
+                            <div class="plant-icon">🌿</div>
+                            <div class="plant-info">
+                                <h4>Basil</h4>
+                                <p class="plant-status">Looking great! (32 days)</p>
+                            </div>
+                        </div>
+                        <div class="plant-card status-attention">
+                            <div class="plant-icon">🥕</div>
+                            <div class="plant-info">
+                                <h4>Carrots</h4>
+                                <p class="plant-status">Needs water (28 days)</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Soil Testing Screen -->
+    <div class="screen hidden" id="testingScreen">
+        <div class="testing-container">
+            <div class="testing-header">
+                <button class="back-btn" data-back="dashboard">← Back to Home</button>
+                <h1>🔬 Let's Test Your Soil!</h1>
+                <p>Follow these simple steps to check how healthy your soil is</p>
+            </div>
+
+            <div class="testing-steps">
+                <div class="step active" id="step1">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h3>Prepare Your Soil Sample</h3>
+                        <div class="step-visual">
+                            <div class="instruction-card">
+                                <div class="instruction-icon">🥄</div>
+                                <p>Dig a small hole about 4 inches deep in your garden</p>
+                            </div>
+                            <div class="instruction-card">
+                                <div class="instruction-icon">🌍</div>
+                                <p>Take a spoonful of soil from the middle of the hole</p>
+                            </div>
+                            <div class="instruction-card">
+                                <div class="instruction-icon">🧹</div>
+                                <p>Remove any rocks, leaves, or sticks from the soil</p>
+                            </div>
+                        </div>
+                        <button class="btn btn--primary btn--lg" onclick="nextStep(2)">I'm Ready! Next Step →</button>
+                    </div>
+                </div>
+
+                <div class="step hidden" id="step2">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h3>Test the Moisture</h3>
+                        <div class="test-interface">
+                            <div class="sensor-display">
+                                <div class="sensor-icon">💧</div>
+                                <div class="sensor-reading">
+                                    <div class="reading-value" id="moistureReading">--</div>
+                                    <div class="reading-label">Moisture %</div>
+                                </div>
+                            </div>
+                            <button class="btn btn--primary btn--lg" id="startMoistureTest">
+                                🔍 Start Moisture Test
+                            </button>
+                        </div>
+                        <div class="test-tips">
+                            <h4>💡 Tips:</h4>
+                            <ul>
+                                <li>Good soil should feel like a damp sponge</li>
+                                <li>Too dry? Your plants might be thirsty!</li>
+                                <li>Too wet? Plants might have trouble breathing</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="step hidden" id="step3">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h3>Check the pH Level</h3>
+                        <div class="test-interface">
+                            <div class="sensor-display">
+                                <div class="sensor-icon">⚖️</div>
+                                <div class="sensor-reading">
+                                    <div class="reading-value" id="phReading">--</div>
+                                    <div class="reading-label">pH Level</div>
+                                </div>
+                            </div>
+                            <button class="btn btn--primary btn--lg" id="startPhTest">
+                                🔍 Start pH Test
+                            </button>
+                        </div>
+                        <div class="ph-scale">
+                            <h4>Understanding pH:</h4>
+                            <div class="ph-bar">
+                                <div class="ph-segment acidic">1-6 Acidic 🍋</div>
+                                <div class="ph-segment neutral">7 Neutral 💧</div>
+                                <div class="ph-segment alkaline">8-14 Alkaline 🧂</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="step hidden" id="step4">
+                    <div class="step-number">4</div>
+                    <div class="step-content">
+                        <h3>🎉 Great Job! Here Are Your Results</h3>
+                        <div class="results-summary">
+                            <div class="result-card">
+                                <h4>Overall Soil Health</h4>
+                                <div class="health-score good">
+                                    <div class="score-icon">😊</div>
+                                    <div class="score-text">Healthy & Happy!</div>
+                                </div>
+                            </div>
+                            
+                            <div class="recommendations">
+                                <h4>What to do next:</h4>
+                                <div class="rec-list">
+                                    <div class="rec-item">
+                                        <span class="rec-icon">🌱</span>
+                                        <span>Your soil is perfect for planting vegetables!</span>
+                                    </div>
+                                    <div class="rec-item">
+                                        <span class="rec-icon">🍂</span>
+                                        <span>Add some compost next month for extra nutrients</span>
+                                    </div>
+                                    <div class="rec-item">
+                                        <span class="rec-icon">💧</span>
+                                        <span>Keep watering regularly - you're doing great!</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="results-actions">
+                            <button class="btn btn--primary btn--lg" data-action="save-results">
+                                💾 Save My Results
+                            </button>
+                            <button class="btn btn--secondary btn--lg" data-action="share-results">
+                                📤 Share with Community
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Progress Screen -->
+    <div class="screen hidden" id="progressScreen">
+        <div class="progress-container">
+            <div class="progress-header">
+                <button class="back-btn" data-back="dashboard">← Back to Home</button>
+                <h1>🏆 My Garden Journey</h1>
+                <p>Look how much you've accomplished!</p>
+            </div>
+
+            <!-- User Level and Stats -->
+            <div class="level-card">
+                <div class="level-info">
+                    <div class="level-badge">Level 3</div>
+                    <div class="level-title">Garden Helper</div>
+                    <div class="level-progress">
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 70%;"></div>
+                        </div>
+                        <span class="progress-text">850 / 1000 points to Level 4</span>
+                    </div>
+                </div>
+                <div class="level-stats">
+                    <div class="stat-item">
+                        <span class="stat-number">12</span>
+                        <span class="stat-label">Plants Helped</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">28</span>
+                        <span class="stat-label">Days Active</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Achievements -->
+            <div class="achievements-section">
+                <h3>🎖️ My Achievements</h3>
+                <div class="achievements-grid">
+                    <div class="achievement-card earned">
+                        <div class="achievement-icon">🌱</div>
+                        <div class="achievement-info">
+                            <h4>First Soil Test</h4>
+                            <p>Completed your first soil test</p>
+                            <span class="achievement-date">Dec 15, 2024</span>
+                        </div>
+                    </div>
+                    <div class="achievement-card earned">
+                        <div class="achievement-icon">⭐</div>
+                        <div class="achievement-info">
+                            <h4>7 Days Active</h4>
+                            <p>Used the app for a whole week</p>
+                            <span class="achievement-date">Dec 22, 2024</span>
+                        </div>
+                    </div>
+                    <div class="achievement-card earned">
+                        <div class="achievement-icon">🌿</div>
+                        <div class="achievement-info">
+                            <h4>Plant Whisperer</h4>
+                            <p>Helped 10 plants grow healthy</p>
+                            <span class="achievement-date">Jan 8, 2025</span>
+                        </div>
+                    </div>
+                    <div class="achievement-card earned">
+                        <div class="achievement-icon">👥</div>
+                        <div class="achievement-info">
+                            <h4>Community Star</h4>
+                            <p>Shared knowledge with others</p>
+                            <span class="achievement-date">Jan 15, 2025</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Garden Timeline -->
+            <div class="timeline-section">
+                <h3>📅 My Garden Timeline</h3>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-date">Jan 10</div>
+                        <div class="timeline-content">
+                            <div class="timeline-icon good">📈</div>
+                            <div class="timeline-text">
+                                <h4>Soil Health Improved!</h4>
+                                <p>Your consistent care is paying off</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date">Jan 5</div>
+                        <div class="timeline-content">
+                            <div class="timeline-icon">🔬</div>
+                            <div class="timeline-text">
+                                <h4>Soil Test Completed</h4>
+                                <p>Found areas that needed attention</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date">Jan 1</div>
+                        <div class="timeline-content">
+                            <div class="timeline-icon good">🌱</div>
+                            <div class="timeline-text">
+                                <h4>New Year, New Growth!</h4>
+                                <p>Started the year with healthy soil readings</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Learning Hub Screen -->
+    <div class="screen hidden" id="learningScreen">
+        <div class="learning-container">
+            <div class="learning-header">
+                <button class="back-btn" data-back="dashboard">← Back to Home</button>
+                <h1>📚 Learning Hub</h1>
+                <p>Discover the amazing world of soil!</p>
+            </div>
+
+            <div class="learning-content">
+                <!-- Featured Lesson -->
+                <div class="featured-lesson">
+                    <h3>🌟 Today's Featured Lesson</h3>
+                    <div class="lesson-card featured">
+                        <div class="lesson-image">🏡</div>
+                        <div class="lesson-content">
+                            <h4>What Makes Soil Happy?</h4>
+                            <p>Just like people, soil needs food, water, and air to be healthy. Let's discover what makes soil smile!</p>
+                            <div class="lesson-activities">
+                                <span class="activity-tag">Color Test</span>
+                                <span class="activity-tag">Touch Test</span>
+                                <span class="activity-tag">Smell Test</span>
+                            </div>
+                            <button class="btn btn--primary">Start Learning! 🚀</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Lesson Categories -->
+                <div class="lesson-categories">
+                    <h3>Choose Your Adventure</h3>
+                    <div class="categories-grid">
+                        <div class="category-card">
+                            <div class="category-icon">🌱</div>
+                            <h4>Soil Basics</h4>
+                            <p>Learn what soil is made of and why it's important</p>
+                            <div class="category-stats">3 lessons • Beginner</div>
+                        </div>
+                        <div class="category-card">
+                            <div class="category-icon">🐛</div>
+                            <h4>Underground City</h4>
+                            <p>Meet the tiny creatures that live in soil</p>
+                            <div class="category-stats">4 lessons • Intermediate</div>
+                        </div>
+                        <div class="category-card">
+                            <div class="category-icon">🌿</div>
+                            <h4>Plant Friends</h4>
+                            <p>How plants and soil work together</p>
+                            <div class="category-stats">2 lessons • Beginner</div>
+                        </div>
+                        <div class="category-card">
+                            <div class="category-icon">♻️</div>
+                            <h4>Soil Helpers</h4>
+                            <p>Ways to make soil healthier</p>
+                            <div class="category-stats">5 lessons • All levels</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Interactive Tools -->
+                <div class="tools-section">
+                    <h3>🛠️ Interactive Tools</h3>
+                    <div class="tools-grid">
+                        <button class="tool-card" data-tool="ph-simulator">
+                            <div class="tool-icon">⚖️</div>
+                            <div class="tool-content">
+                                <h4>pH Simulator</h4>
+                                <p>See how different things change soil pH</p>
+                            </div>
+                        </button>
+                        <button class="tool-card" data-tool="creature-spotter">
+                            <div class="tool-icon">🔍</div>
+                            <div class="tool-content">
+                                <h4>Creature Spotter</h4>
+                                <p>Identify helpful soil creatures</p>
+                            </div>
+                        </button>
+                        <button class="tool-card" data-tool="compost-mixer">
+                            <div class="tool-icon">🍂</div>
+                            <div class="tool-content">
+                                <h4>Compost Mixer</h4>
+                                <p>Learn what makes good compost</p>
+                            </div>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Community Screen -->
+    <div class="screen hidden" id="communityScreen">
+        <div class="community-container">
+            <div class="community-header">
+                <button class="back-btn" data-back="dashboard">← Back to Home</button>
+                <h1>👥 Community Corner</h1>
+                <p>Connect with fellow gardeners and experts!</p>
+            </div>
+
+            <div class="community-content">
+                <!-- Local Tips -->
+                <div class="tips-section">
+                    <h3>🌍 Tips for Your Area</h3>
+                    <div class="tips-list">
+                        <div class="tip-card">
+                            <div class="tip-icon">📅</div>
+                            <p>January is perfect for planning your spring garden</p>
+                        </div>
+                        <div class="tip-card">
+                            <div class="tip-icon">🍂</div>
+                            <p>Add compost now before the growing season</p>
+                        </div>
+                        <div class="tip-card">
+                            <div class="tip-icon">🌡️</div>
+                            <p>Check soil temperature before planting</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Community Posts -->
+                <div class="posts-section">
+                    <h3>💬 Community Stories</h3>
+                    <div class="posts-list">
+                        <div class="post-card expert">
+                            <div class="post-header">
+                                <div class="post-avatar">👩‍🌾</div>
+                                <div class="post-info">
+                                    <h4>Master Gardener Mary</h4>
+                                    <span class="post-role">Expert</span>
+                                    <span class="post-time">3 hours ago</span>
+                                </div>
+                            </div>
+                            <div class="post-content">
+                                <p>Great job on your soil test! Try adding some coffee grounds for extra nutrients. Coffee grounds are slightly acidic and perfect for plants like tomatoes and blueberries. 🌱☕</p>
+                            </div>
+                            <div class="post-actions">
+                                <button class="post-btn">❤️ 12 likes</button>
+                                <button class="post-btn">💬 Reply</button>
+                                <button class="post-btn">🔄 Share</button>
+                            </div>
+                        </div>
+
+                        <div class="post-card student">
+                            <div class="post-header">
+                                <div class="post-avatar">👧</div>
+                                <div class="post-info">
+                                    <h4>Little Lily (age 9)</h4>
+                                    <span class="post-role">Young Gardener</span>
+                                    <span class="post-time">1 day ago</span>
+                                </div>
+                            </div>
+                            <div class="post-content">
+                                <p>My tomatoes are growing so tall! Thanks for the help everyone! 🍅 I tested the soil like you taught me and it's really happy. Can't wait to make salad with my tomatoes!</p>
+                            </div>
+                            <div class="post-actions">
+                                <button class="post-btn">❤️ 25 likes</button>
+                                <button class="post-btn">💬 Reply</button>
+                                <button class="post-btn">🔄 Share</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Ask for Help -->
+                <div class="help-section">
+                    <h3>🤔 Need Help?</h3>
+                    <div class="help-options">
+                        <button class="help-btn" data-help="question">
+                            <div class="help-icon">❓</div>
+                            <div class="help-text">
+                                <h4>Ask a Question</h4>
+                                <p>Our community is here to help!</p>
+                            </div>
+                        </button>
+                        <button class="help-btn" data-help="expert">
+                            <div class="help-icon">👨‍🔬</div>
+                            <div class="help-text">
+                                <h4>Talk to an Expert</h4>
+                                <p>Get advice from master gardeners</p>
+                            </div>
+                        </button>
+                        <button class="help-btn" data-help="photo">
+                            <div class="help-icon">📸</div>
+                            <div class="help-text">
+                                <h4>Share a Photo</h4>
+                                <p>Show your garden progress</p>
+                            </div>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modals -->
+    <div class="modal hidden" id="helpModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>🆘 How Can We Help?</h2>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="help-options-modal">
+                    <button class="help-option" data-help-type="voice">
+                        <span class="help-icon">🎤</span>
+                        <span>Voice Help</span>
+                    </button>
+                    <button class="help-option" data-help-type="text">
+                        <span class="help-icon">💬</span>
+                        <span>Text Help</span>
+                    </button>
+                    <button class="help-option" data-help-type="video">
+                        <span class="help-icon">📹</span>
+                        <span>Video Guide</span>
+                    </button>
+                    <button class="help-option" data-help-type="expert">
+                        <span class="help-icon">👨‍🏫</span>
+                        <span>Talk to Expert</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal hidden" id="voiceModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>🎤 Voice Helper</h2>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="voice-interface">
+                    <div class="voice-animation">
+                        <div class="voice-circle"></div>
+                    </div>
+                    <p id="voiceStatus">Say something like "Test my soil" or "Show my progress"</p>
+                    <div class="voice-suggestions">
+                        <h4>Try saying:</h4>
+                        <ul>
+                            <li>"Test my soil"</li>
+                            <li>"Show my progress"</li>
+                            <li>"Teach me about soil"</li>
+                            <li>"Go to community"</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
